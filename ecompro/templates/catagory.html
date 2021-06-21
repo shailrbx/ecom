@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+    {% if category %}
+        {{category.description|truncatewords:150 }}
+    {% else %}
+        Welcome to e-com store
+    {% endif %}
+{% endblock %}
+
+
+
+{% block title %}
+    {% if category %}
+        {{category.name }} - E-com
+    {% else %}
+        E-com
+    {% endif %}
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container-fluid">
+    {% if category %}
+        <div>
+            <div class="row row_my_class">
+                <div class="mx-auto">
+                <p><a href="{% url 'ecomapp:AllProdCat' %}">Our products</a> </p>
+        </div></div>
+        </div>
+    {% endif %}
+<div>
+    {% if catgory %}
+    <img class="bansize" src="{{catgory.image.url}}" alt="{{catgory.name}}"  >
+
+</div><br>
+<div class="container">
+    <h1>
+        {{catgory.name}}
+    </h1>
+    <p>
+        {{catgory.description}}
+    </p>
+    </div>
+
+{% else %}
+<div>
+    <img src="{% static 'img/ban2.png' %}" alt="Our products" style="width:1330px; height:450px;">
+
+</div><br><hr>
+<div class="container">
+    <h1>
+        Our product collection
+    </h1>
+        <p>Contrary to popular belief, Lorem Ipsum is not simply
+        random text. It has roots in a piece of classical Latin
+        literature from 45 BC, making it over 2000 years old. Richard McClintock,
+        a Latin professor at Hampden-Sydney College in Virginia</p>
+</div>
+
+ {% endif %}
+<hr>
+<div class="container" >
+    <div class="row">
+        {% for product in products.object_list %}
+            <div class="bot_margin col-9 col-sm-12 col-md-4 xol-lg-4">
+                <div class="card" style="width:20rem; height:24rem;">
+                    <a href="{{product.get_url}}"><img  class="card-img-bottom" style="width:150;height:24rem;" src="{{product.image.url}}" alt="{{product.name}}" ></a>
+                </div>
+                <div class="card-body text-center">
+                    <h3 class="card-title text-uppercase">{{product.name}}</h3>
+                    <h3 ><b>Rs </b>{{product.price}}</h3>
+                </div>
+            </div>
+        <hr>
+        {% endfor %}
+    </div></div>
+
+
+
+
+
+<div class="mx-auto">
+    {% if products.paginator.num_pages > 1 %}
+         <hr><div class="text-center">
+
+            <ul class="pagination justify-content-center">
+
+                <!-- <li class="page-item ">
+                     <a class="page-link " href="?page={{pg}}" tabindex="-1">Previous</a>
+                </li> -->
+                 {% for pg in products.paginator.page_range %}
+                <li class="page-item ">
+                     <a class="page-link" href="?page={{pg}}"> {{pg}}<span class="sr-only">(current)</span></a>
+                 </li>
+                 {% endfor %}
+<!-- 
+                <li class="page-item">
+                     <a class="page-link"  href="?page={{pg}}">Next</a>
+                 </li> -->
+  </ul>
+                    </div>
+    {% endif %}
+</div>
+
+
+</div>
+
+{% endblock %}
+
+
+<!-- <div class="text-center">-->
+<!--                 {% for pg in products.paginator.page_range %}-->
+<!--                     <a href="?page={{pg}}" class="btn btn-light btn-sm {% if products.number == pg %} active {% endif %}">{{pg}}</a>-->
+<!--                 {% endfor %}-->
+<!--            </div>-->

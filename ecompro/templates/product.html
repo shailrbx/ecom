@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+
+        {{product.description|truncatewords:150 }}
+
+
+{% endblock %}
+
+
+
+{% block title %}
+    {% if category %}
+        {{product.name }} - E-com
+
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+<br>
+<div class="container">
+
+<!--        <div class="mx-auto">-->
+<!--        <p>-->
+<!--            <a href="{% url 'ecomapp:AllprodCat' %}">Home</a> |<a href="{{product.category.get_url}}">{{product.category}} </a>| {{product.name}}-->
+<!--        </p><hr>-->
+<!--          </div>-->
+
+<div class="mx-auto">
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'ecomapp:AllprodCat' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{product.category.get_url}}">{{product.category}} </a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{product.name}}</li>
+  </ol>
+</nav>
+
+<hr>
+          </div>
+
+
+
+
+</div>
+
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <img  class="img-fluid rounded" src="{{product.image.url}}" alt="{{product.name}}" style="width:500px;height:500px;">
+        </div>
+
+    <div class="col-sm-6">
+        <div>
+            <h1 class="text-uppercase">{{product.name}}</h1>
+            <h4 style="color:red;">${{product.price}}</h4><hr>
+            <h4>Product Description</h4>
+            <h5 class="text-justify">{{product.description}}</h5>
+        </div>
+
+
+
+            {% if product.stock <= 0 %}
+                <h1 style="color:red;"><b>OUT OF STOCK</b></h1>
+            {% else %}
+         <div><br><br><br>
+             <a  class="btn btn-success btn-lg btn-block" href="{% url 'cart:add_cart' product.id %}">Add To Cart</a>
+
+             <a  class="btn btn-info btn-lg btn-block" href="{% url 'ecomapp:AllprodCat' %}">More Product</a>
+            {% endif %}
+         </div>
+    </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

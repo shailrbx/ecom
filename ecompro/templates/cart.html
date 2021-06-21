@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+      This is cart page.view your items
+{% endblock %}
+
+{% block title %}
+    Cart-E-com
+{% endblock %}
+{% block content %}
+
+{% if not cart_items %}
+<div>
+    <div class="text-center">
+        <br>
+            <h1 class="text-center my_title">
+                Your Cart is <b>empty</b>.
+            </h1>
+        <br>
+            <p class="text-center"> Please shop now<a href="{% url 'ecomapp:AllprodCat' %}">e-COM</a></p>
+
+    </div>
+</div>
+{% else %}
+<div>
+    <div class="text-center">
+        <br>
+        <h1 class="text-center my_title">
+            Your Cart
+        </h1>
+        <br>
+    </div>
+    <div class="row mx-auto">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <table class="table custome_table">
+                <thead class="my_head">
+                <tr >
+                    <th colspan="5">
+                        Your items
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for cart_item in cart_items %}
+                <tr>
+                    <td>
+                        <a href="cart_item.product.get_absolute_url"><img src="{{cart_item.product.image.url}}" style="width:100px;height:100px;" alt="" class="float-left rounded custom_image"> </a>
+
+                    </td>
+                    <td class="text-left">
+                        <h5><b>{{cart_item.product.name}}</b></h5>
+                        <br>
+                        SKU :{{cart_item.product.id}}
+                        <br>
+                        Price :$ {{cart_item.product.price}}
+                        <br>
+                        Quantity: {{cart_item.quantity}}
+                        <br><br><br>
+                        <b>Totl: {{cart_item.sub_total}}</b>
+                    </td>
+
+                    {% if cart_item.quantity < cart_item.product.stock %}
+                    <td>
+                        <a href="{% url 'cart:add_cart' cart_item.product.id %}" class="custome_a"><i class="fa fa-plus custome_icon"></i></a>
+                        &nbsp;<br><br>
+                        <a href="{% url 'cart:cart_remove' cart_item.product.id %}" class="custome_a" ><i class="fa fa-minus custome_icon"></i> </a>
+                         &nbsp;<br><br>
+                         <a href="{% url 'cart:delition' cart_item.product.id %}"  class="custome_icon" ><i class="fa fa-trash custome_icon"></i> </a>
+
+                    </td>
+                    {% else %}
+                    <td>
+                        &nbsp;
+                        <a href="{% url 'cart:cart_remove' cart_item.product.id %}" class="custome_a" ><i class="fa fa-minus custome_icon"></i> </a>
+                         &nbsp;<br><br>
+                        <a href="{% url 'cart:delition' cart_item.product.id %}" class="custome_icon" ><i class="fa fa-trash custome_icon"></i> </a>
+
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <table class="table custome_table">
+                <thead class="my_head">
+                <tr>
+                    <th>
+                        Checkout
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        please review your cart items before proceeding order payment.
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                       <h3> Your tottal amount : $ <b>{{total}}</b></h3>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="mx-auto">
+                <a href="{% url 'ecomapp:AllprodCat' %}" class="btn btn-primary my_custome_button">Continue shoping</a>
+                  <a tabindex="0" href="#" class="btn btn-success my_custome_button" data-bs-toggle="popover" title="Sorry Payment option not available due to covid-19" >Purchace</a>
+            </div>
+{% endif %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,101 @@
+<div class="container-fluid">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <ul class="nav justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="{% url 'ecomapp:AllprodCat' %}">Home <i class="fa fa-home" aria-hidden="true"></i></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="">About <i class="fa fa-address-card" aria-hidden="true"></i></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#footer1">Contact <i class="fa fa-address-book" aria-hidden="true"></i></a>
+  </li>
+
+
+  <li class="nav-item dropdown {% if 'ecomapp' in request.path %} active {% endif %}">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Catagory <i class="fa fa-list" aria-hidden="true"></i>
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+      <a class="dropdown-item" href="{% url 'ecomapp:AllprodCat' %}">All Catagory</a>
+      {% for cat in links %}
+      <a class="dropdown-item" href="{{cat.get_url}}">{{cat.name}}</a>
+      {% endfor %}
+    </div>
+  </li>
+
+
+
+<!-- 
+
+       <li class="nav-item dropdown {% if 'ecomapp' in request.path %} active {% endif %}">
+          <a class="nav-link dropdown-toggle" href="{% url 'ecomapp:AllprodCat' %}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Catagory
+            <i class="fa fa-list" aria-hidden="true"></i>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'ecomapp:AllprodCat' %}">All Catagory</a></li>
+             {% for cat in links %}
+            <li><a class="dropdown-item" href="{{cat.get_url}}">{{cat.name}}</a></li>
+            {% endfor %}
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+       </li> -->
+
+
+
+
+        {% if item_count > 0 %}
+      <li class="nav-item">
+    <a class="nav-link" href="{% url 'cart:cart_detail' %}">Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i> ({{item_count}})</a>
+  </li>
+        {% endif %}
+</ul>
+
+    <form class="d-flex" action="{% url 'search_app:searchResult' %}" method="get">
+        {% csrf_token %}
+      <input class="form-control me-2" type="search" placeholder="Search" name="q" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+
+
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+      <ul class="nav justify-content-center">
+
+          <li class="nav-item"><a class="nav-link active" href="{% url 'ecomapp:AllprodCat' %}">All Catagory</a></li>
+
+            {% for cat in links %}
+          <li class="nav-item">
+             <a class="nav-link active" aria-current="page" href="{{cat.get_url}}">{{cat.name}}</a>
+          </li>
+            {% endfor %}
+      </ul>
+  </div>
+</nav> -->
+
+
+</div>
+
+<br>
+
+
+
+
+
+
+<!--<div>-->
+<!--    <ul>-->
+<!--        <li><a href="{% url 'ecomapp:AllprodCat' %}">All products</a> </li>-->
+<!--          {% for cat in links %}-->
+<!--        <li><a href="{{cat.get_url}}">{{cat.name}}</a> </li>-->
+<!--        {% endfor %}-->
+
+<!--    </ul>-->
+
+<!--</div>-->
+
